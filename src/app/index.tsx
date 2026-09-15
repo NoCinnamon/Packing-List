@@ -1,13 +1,14 @@
-import { Platform, StyleSheet, TextInput, Pressable, Text, View, } from 'react-native';
+import { Platform, StyleSheet, TextInput, Pressable, Text, View, Image} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { WebBadge } from '@/components/web-badge';
 import { MaxContentWidth, Spacing } from '@/constants/theme';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { router } from 'expo-router';
+import AsyncStorage from '@react-native-async-storage/async-storage';
  
+const STORAGE_KEY = 'packing-trip'
 
 export default function HomeScreen() {
   const [tripName, setTripName] = useState('');
@@ -15,26 +16,51 @@ export default function HomeScreen() {
   const [items, setItems] = useState<string[]>([]);             // packing list in memory
   const [packed, setPacked] = useState<string[]>([]); 
 
+  useEffect(() => {
+    async function loadTrip() {
+      const raw = await AsyncStorage.getItem(STORAGE_KEY);
+      if (!raw) return;
+
+      const data = JSON.parse(raw);
+      setTripName(data.tripName ?? '');
+      setItems(data.items ?? '');
+      setPacked(data.packed ?? '');
+    }
+    loadTrip();
+  }, []);
+
+  async function saveTrip(
+    nextTripName: string,
+    nextItems: string[],
+    nextPacked: string[],
+  ) {
+    await AsyncStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        tripName: nextTripName,
+        items: nextItems,
+        packed: nextPacked,
+      })
+    );
+  }
+
   function addItem() {
     const inputNewItem = newItem.trim();
     if (! inputNewItem) return;
+
+    const nextItems = [...items,inputNewItem]
     setItems([...items, inputNewItem]);                         // add to the list, [...items, label] = old list + new item
     setNewItem('');                                             // clear the box after add
+    saveTrip(tripName, nextItems, packed);
   }
 
   function deleteItem(item:string) {
-    setItems(items.filter((x) => x !== item));
-    setPacked(packed.filter((x) => x !== item));
-  }
+    const nextItems = items.filter((x) => x !== item);
+    const nextPacked = packed.filter((x) => x !== item);
 
-
-
-  function togglePacked(aItem:string) {
-    if (packed.includes(aItem)){
-      setPacked(packed.filter((x) => x !== aItem));             // .filter(...) builds a new list, keeping only some items.                                                            
-    } else {                                                    // (x) => x !== aItem means: keep x if it is not the one we tapped.
-      setPacked([...packed, aItem]);
-    }
+    setItems(nextItems);
+    setPacked(nextPacked);
+    saveTrip(tripName, nextItems, nextPacked);
   }
   
   function screenCheckList() {
@@ -50,6 +76,13 @@ export default function HomeScreen() {
   
   return (
     <ThemedView style={styles.container}>
+
+      <Image
+      source={require('../../assets/images/suitcase.png')}
+      style={styles.image} 
+      resizeMode="contain"
+      />
+
       <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
         <ThemedView style={styles.heroSection}>
 
@@ -105,6 +138,15 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  image: {
+   
+    justifyContent: 'center',
+    width: "30%", 
+    height: 60, 
+    marginTop: 20, 
+    alignSelf:'center', 
   },
 
   safeArea: {

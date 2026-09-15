@@ -1,15 +1,20 @@
 import { useLocalSearchParams, router } from 'expo-router';
 import { Text, View, Pressable, StyleSheet, Alert } from 'react-native';
+import * as Haptics from 'expo-haptics';
+import * as Sharing from 'expo-sharing';
+import * as FileSystem from 'expo-file-system/legacy';
 
 
 export default function CheckListScreen() {
   const params = useLocalSearchParams();
 
-  const tripName = String(params.tripName ?? '')                      // use tripName, or ' ' if missing
-  const items: string[] = JSON.parse(String(params.items ?? '[]'))    // force a string (params can be string | string[])
-  const packed: string[] = JSON.parse(String(params.packed ?? '[]'))  // turn "[\"Water\",\"Food\"]" into ["Water","Food"]
+  const tripName = String(params.tripName ?? '')                              // use tripName, or ' ' if missing
+  const items: string[] = JSON.parse(String(params.items ?? '[]'))            // force a string (params can be string | string[])
+  const packed: string[] = JSON.parse(String(params.packed ?? '[]'))          // turn "[\"Water\",\"Food\"]" into ["Water","Food"]
 
   function deleteAll(){
+    Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
+
     Alert.alert(
       'Are you SURE?',
       'It will delete the whole paking list.',
@@ -26,8 +31,26 @@ export default function CheckListScreen() {
     )
   }
 
+  async function sharePackingList(){
+    const title = tripName || 'My Trip';
+    const text = title + '\n\n' + items.map((item) => '-' + item ).join('\n');
+
+    const path = FileSystem.cacheDirectory + 'Packing-List.txt';
+    await FileSystem.writeAsStringAsync(path, text);
+    const canShare = await Sharing.isAvailableAsync();
+    if (! canShare){
+      Alert.alert('Sharing is not available at the moment');
+      return;
+    }
+    await Sharing.shareAsync(path);
+  }
+
   return (
     <View style={styles.container}>
+      <Pressable onPress={sharePackingList}>
+        <Text style={styles.buttonShare}>Share</Text>
+      </Pressable>
+
       <View style={styles.content}>
         <Text style={styles.tripName}>
           {(tripName || 'My Trip') + ':'}
@@ -68,12 +91,24 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
 
+  buttonShare: {
+    alignSelf:'flex-end',
+    marginTop:18,
+    marginRight: 20,
+    color: 'white',
+    fontWeight: '600',
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: '#DE4C3C',
+    borderRadius: 20,
+  },
+
   buttonDeleteAll: {
     width: '100%',
     alignSelf: 'center',
     alignItems: 'center',
     paddingVertical: 16,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: '#DE4C3C',
     borderRadius: 0,
   },
 
