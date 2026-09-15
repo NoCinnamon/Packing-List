@@ -1,10 +1,10 @@
-import { Platform, StyleSheet, TextInput, Pressable, Text, View, Button } from 'react-native';
+import { Platform, StyleSheet, TextInput, Pressable, Text, View, } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
 import { WebBadge } from '@/components/web-badge';
-import { BottomTabInset, MaxContentWidth, Spacing } from '@/constants/theme';
+import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { useState } from 'react';
 import { router } from 'expo-router';
  
@@ -21,6 +21,13 @@ export default function HomeScreen() {
     setItems([...items, inputNewItem]);                         // add to the list, [...items, label] = old list + new item
     setNewItem('');                                             // clear the box after add
   }
+
+  function deleteItem(item:string) {
+    setItems(items.filter((x) => x !== item));
+    setPacked(packed.filter((x) => x !== item));
+  }
+
+
 
   function togglePacked(aItem:string) {
     if (packed.includes(aItem)){
@@ -40,7 +47,7 @@ export default function HomeScreen() {
       }
     });
   }
-
+  
   return (
     <ThemedView style={styles.container}>
       <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
@@ -62,23 +69,22 @@ export default function HomeScreen() {
             >
           </TextInput>
 
-          <Pressable onPress={addItem} style={styles.buttonAdd}>
-            <Text>Add</Text>
+          <Pressable onPress={addItem}>
+            <Text style={styles.buttonAdd}>Add</Text>
           </Pressable>
 
           <ThemedView type="backgroundElement" style={styles.stepContainer}>
             {items.map((inputNewItem) => {
-              const isPacked = packed.includes(inputNewItem);
-
               return (
-                <Pressable key={inputNewItem} onPress={() => togglePacked(inputNewItem)}>
-                  <ThemedText style={[
-                    styles.items,
-                    { color: isPacked ? '#FFFFFF' : '#000000' },
-                  ]}>
+                <View key={inputNewItem} style={styles.inputNewItem}>
+                  <ThemedText style={styles.items}>
                     {inputNewItem}
                   </ThemedText>
-                </Pressable>
+
+                  <Pressable onPress={()=> deleteItem(inputNewItem)}>
+                    <Text style={styles.buttonDelete}> Delete</Text>
+                  </Pressable>
+                </View>
               );
             })} 
           </ThemedView>
@@ -133,16 +139,34 @@ const styles = StyleSheet.create({
     paddingVertical: 10,
   },
 
+  inputNewItem: {
+     flexDirection: 'row', 
+     alignItems: 'center', 
+     justifyContent: 'space-between'
+  },
+
   tripNameInput: {
     fontSize: 26,
     fontWeight: '600',
   },
 
   buttonAdd: {
+    color: 'white',
+    fontWeight: '600',
     alignSelf: 'center',            
     paddingHorizontal: 14,
     paddingVertical: 10,
-    backgroundColor: '#E5E7EB',
+    backgroundColor: '#3fed05',
+    borderRadius: 20,
+  },
+
+  buttonDelete: {
+    color: 'white',
+    fontWeight: '600',
+    alignSelf: 'center',            
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    backgroundColor: '#f7382a',
     borderRadius: 20,
   },
 
