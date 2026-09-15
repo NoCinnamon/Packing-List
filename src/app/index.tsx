@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, TextInput, Pressable, Text } from 'react-native';
+import { Platform, StyleSheet, TextInput, Pressable, Text, View, Button } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 
 import { ThemedText } from '@/components/themed-text';
@@ -43,7 +43,7 @@ export default function HomeScreen() {
 
   return (
     <ThemedView style={styles.container}>
-      <SafeAreaView style={styles.safeArea}>
+      <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
         <ThemedView style={styles.heroSection}>
 
           <TextInput 
@@ -83,14 +83,15 @@ export default function HomeScreen() {
             })} 
           </ThemedView>
         </ThemedView>
-
-        <Pressable onPress={screenCheckList} style={styles.checkListButton}>
-          <Text style={styles.checkListText}>CHECK LIST</Text>
-        </Pressable>
-
-
-        {Platform.OS === 'web' && <WebBadge />}
       </SafeAreaView>
+        
+      <Pressable onPress={screenCheckList} style={styles.checkListButton}>
+        <Text style={styles.checkListText}>CHECK LIST</Text>
+      </Pressable>
+
+
+      {Platform.OS === 'web' && <WebBadge />}
+     
     </ThemedView>
   );
 }
@@ -98,18 +99,16 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
-    flexDirection: 'row',
   },
 
   safeArea: {
     flex: 1,
     paddingHorizontal: Spacing.four,
     alignItems: 'center',
-    gap: Spacing.three,
-    paddingBottom: BottomTabInset + Spacing.three,
     maxWidth: MaxContentWidth,
+    width: '100%'
   },
+
   heroSection: {
     width:'100%',
     flex: 1,
@@ -152,12 +151,12 @@ const styles = StyleSheet.create({
   },
 
   checkListButton: {
-    marginTop: 'auto',
+    width: '100%',
     alignSelf: 'center',
-    paddingHorizontal: 14,
-    paddingVertical: 10,
+    alignItems: 'center',
+    paddingVertical: 16,
     backgroundColor: '#E5E7EB',
-    borderRadius: 20,
+    borderRadius: 0,
   },
   
   checkListText: {
