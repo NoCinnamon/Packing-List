@@ -91,7 +91,7 @@ export default function HomeScreen() {
         </ThemedView>
       </SafeAreaView>
         
-      <Pressable onPress={screenCheckList} style={styles.checkListButton}>
+      <Pressable onPress={screenCheckList} style={styles.buttonCheckList}>
         <Text style={styles.checkListText}>CHECK LIST</Text>
       </Pressable>
 
@@ -174,7 +174,7 @@ const styles = StyleSheet.create({
     textAlign: 'left',
   },
 
-  checkListButton: {
+  buttonCheckList: {
     width: '100%',
     alignSelf: 'center',
     alignItems: 'center',
