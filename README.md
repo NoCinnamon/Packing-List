@@ -85,4 +85,17 @@ Then open it with one of the options in Prerequisites section 4 (Expo Go, simula
 
 This app can be used as a quick reminding list, espacially for trip packing.
 Examples:
+<br>
+Home screen — enter a trip name and add items:
+<img src="assets/images/homeScreen.png" alt="Home screen" width="300" />
+Adding items to the packing list:
+<img src="assets/images/HS-addingList.png" alt="HS adding list" width="300" />
+Check list screen:
+<img src="assets/images/secondScreenList.png" alt="second screen with list created" width="300" />
+Share the list:
+<img src="assets/images/expo-share.png" alt="pakage-expo-sharing" width="300" />
+Delete All confirmation:
+<img src="assets/images/deleteAllAlert.png" alt="deleteAllAlert" width="300" />
 
+## App scetch:
+<img src="assets/images/scetch.jpeg" alt="scetch" width="300" />
