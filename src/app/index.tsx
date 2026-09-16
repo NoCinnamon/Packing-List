@@ -5,29 +5,48 @@ import { ThemedView } from '@/components/themed-view';
 import { WebBadge } from '@/components/web-badge';
 import { MaxContentWidth, Spacing } from '@/constants/theme';
 import { useState, useEffect } from 'react';
-import { router } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
  
 const STORAGE_KEY = 'packing-trip'
 
 export default function HomeScreen() {
+  const params = useLocalSearchParams<{clear?: string | string[]}> ();
+  const clear = String(params.clear ?? '');
+
   const [tripName, setTripName] = useState('');
   const [newItem, setNewItem] = useState('');
   const [items, setItems] = useState<string[]>([]);             // packing list in memory
   const [packed, setPacked] = useState<string[]>([]); 
 
   useEffect(() => {
-    async function loadTrip() {
-      const raw = await AsyncStorage.getItem(STORAGE_KEY);
-      if (!raw) return;
+    let cancelled = false;
+    
+    async function syncTrip() {
+      if (clear === '1') {
+        setTripName('');
+        setNewItem('');
+        setItems([]);
+        setPacked([]);
 
+        await AsyncStorage.removeItem(STORAGE_KEY);
+        if (!cancelled) {
+          router.replace('/');
+        }
+        return;
+      }
+      const raw = await AsyncStorage.getItem(STORAGE_KEY);
+      if (cancelled || !raw) return;
       const data = JSON.parse(raw);
       setTripName(data.tripName ?? '');
-      setItems(data.items ?? '');
-      setPacked(data.packed ?? '');
+      setItems(data.items ?? []);
+      setPacked(data.packed ?? []);
     }
-    loadTrip();
-  }, []);
+    syncTrip();
+    return () => {
+      cancelled = true;
+    };
+  }, [clear]);
 
   async function saveTrip(
     nextTripName: string,

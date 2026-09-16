@@ -114,6 +114,7 @@ const styles = StyleSheet.create({
 
   deleteAllText: {
     fontWeight: '600',
+    color:'white',
   },
 });
 
