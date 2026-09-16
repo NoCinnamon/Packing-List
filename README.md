@@ -9,7 +9,7 @@ To run this packing list app locally, you’ll need:
 Node.js includes npm (the package manager).
 
 - Download: [https://nodejs.org/](https://nodejs.org/) (LTS version recommended)
-Note: for clone repository, check under line 60 'Installateion'.<br>
+Note: for clone repository, check under line 60 'Installateion'.  
 
 - Check install:
 
@@ -28,15 +28,21 @@ Needed to clone the repo.
 
 Download: [https://git-scm.com/](https://git-scm.com/)
 Check install:
+
 ```bash
 `git --version` 
 ```
+
 ### 3. Expo (via this project)
 
 You don’t need a global Expo install. After npm install, use:
-```bash 
+
+```bash
 npx expo start` 
 ```
+
+
+
 ### 4. A way to open the app (pick one)
 
 - Option A — Phone (easiest)
@@ -59,43 +65,57 @@ Set up an emulator, then press a in the Expo terminal
 
 Press w in the Expo terminal after starting the project
 
-
 ## Installation
 
+
+
 ### 1. Clone the repo
+
 ```bash
 git clone git@github.com:NoCinnamon/Packing-List.git
 ```
 
+
+
 ### 2. Install project package
 
-```bash 
+```bash
 npm install
 ```
-<br>
+
+  
 Note: you dont need a global Expo install.
 
 ### 3. Start the app
+
 ```bash
 npx expo start
 ```
+
 Then open it with one of the options in Prerequisites section 4 (Expo Go, simulator, emulator, or web).
 
 ## Usage
 
 This app can be used as a quick reminding list, espacially for trip packing.
 Examples:
-<br>
+  
+
 Home screen — enter a trip name and add items:
-<img src="assets/images/homeScreen.png" alt="Home screen" width="300" />
+<br>  
 Adding items to the packing list:
-<img src="assets/images/HS-addingList.png" alt="HS adding list" width="300" />
+<img src="assets/images/homeScreen.png" alt="homeScreen" width="300" /> 
+<br>
+<img src="assets/images/HS-addingList.png" alt="HS-addingList.png" width="300" /> 
+<br>
 Check list screen:
-<img src="assets/images/secondScreenList.png" alt="second screen with list created" width="300" />
+<img src="assets/images/secondScreenList.png" alt="second screen with list created" width="300" /> 
+<br>
 Share the list:
-<img src="assets/images/expo-share.png" alt="pakage-expo-sharing" width="300" />
+<img src="assets/images/expo-share.png" alt="package expo=sharing" width="300" /> 
+<br>
 Delete All confirmation:
-<img src="assets/images/deleteAllAlert.png" alt="deleteAllAlert" width="300" />
+<img src="assets/images/deleteAllAlert.png" alt="delete all" width="300" /> 
 
 ## App scetch:
-<img src="assets/images/scetch.jpeg" alt="scetch" width="300" />
+
+<img src="assets/images/scetch.jpeg" alt="scetch" width="300" /> 
