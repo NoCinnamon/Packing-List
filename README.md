@@ -10,7 +10,6 @@ Node.js includes npm (the package manager).
 
 - Download: [https://nodejs.org/](https://nodejs.org/) (LTS version recommended)
 Note: for clone repository, check under line 60 'Installateion'.  
-
 - Check install:
 
 ```bash
@@ -83,7 +82,6 @@ git clone git@github.com:NoCinnamon/Packing-List.git
 npm install
 ```
 
-  
 Note: you dont need a global Expo install.
 
 ### 3. Start the app
@@ -98,24 +96,34 @@ Then open it with one of the options in Prerequisites section 4 (Expo Go, simula
 
 This app can be used as a quick reminding list, espacially for trip packing.
 Examples:
-  
 
 Home screen — enter a trip name and add items:
-<br>  
+
 Adding items to the packing list:
-<img src="assets/images/homeScreen.png" alt="homeScreen" width="300" /> 
-<br>
-<img src="assets/images/HS-addingList.png" alt="HS-addingList.png" width="300" /> 
-<br>
+![homeScreen](assets/images/homeScreen.png) 
+
+![HS-addingList.png](assets/images/HS-addingList.png) 
+
 Check list screen:
-<img src="assets/images/secondScreenList.png" alt="second screen with list created" width="300" /> 
-<br>
+![second screen with list created](assets/images/secondScreenList.png) 
+
 Share the list:
-<img src="assets/images/expo-share.png" alt="package expo=sharing" width="300" /> 
-<br>
+![package expo=sharing](assets/images/expo-share.png) 
+
 Delete All confirmation:
-<img src="assets/images/deleteAllAlert.png" alt="delete all" width="300" /> 
+![delete all](assets/images/deleteAllAlert.png) 
 
 ## App scetch:
 
-<img src="assets/images/scetch.jpeg" alt="scetch" width="300" /> 
+![scetch](assets/images/scetch.jpeg)
+
+## Extra expo packages:
+
+1. expo-share
+2. async-storage  @react-native-async-storage/async-storage 
+
+* expo-share: On second screen, the share button on the up right corner, when click, a sharing sheet pop at the bottom and the app writes the trip name and items into a text file.From there you can click copy then send the list through Messages, Mail, AirDrop, or another app on the phone.
+
+* async-storage: it saves the data when you close the app, then when you reopen it, it shows the list from lastime you write it. Only when click **delete All** button, it will delete all, and back to begining empty stage.
+
+
