@@ -190,3 +190,7 @@ in this project, 3 methods are used:
 Save (your saveTrip)
 Load (your syncTrip / loadTrip)
 Delete (Delete All)
+
+
+keyboardavoidingview
+scrollview

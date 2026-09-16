@@ -10,7 +10,7 @@ export default function CheckListScreen() {
 
   const tripName = String(params.tripName ?? '')                              // use tripName, or ' ' if missing
   const items: string[] = JSON.parse(String(params.items ?? '[]'))            // force a string (params can be string | string[])
-  const packed: string[] = JSON.parse(String(params.packed ?? '[]'))          // turn "[\"Water\",\"Food\"]" into ["Water","Food"]
+  // const packed: string[] = JSON.parse(String(params.packed ?? '[]'))          // turn "[\"Water\",\"Food\"]" into ["Water","Food"]
 
   function deleteAll(){
     Haptics.notificationAsync(Haptics.NotificationFeedbackType.Warning);
