@@ -1,4 +1,4 @@
-import { Platform, StyleSheet, TextInput, Pressable, Text, View, Image} from 'react-native';
+import { Platform, StyleSheet, TextInput, Pressable, Text, View, Image, ScrollView} from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { ThemedText } from '@/components/themed-text';
 import { ThemedView } from '@/components/themed-view';
@@ -8,6 +8,7 @@ import { useState, useEffect } from 'react';
 import { router, useLocalSearchParams } from 'expo-router';
 import AsyncStorage from '@react-native-async-storage/async-storage';
  
+
 const STORAGE_KEY = 'packing-trip'
 
 export default function HomeScreen() {
@@ -94,62 +95,67 @@ export default function HomeScreen() {
   }
   
   return (
+    
     <ThemedView style={styles.container}>
+      <ScrollView
+      keyboardShouldPersistTaps="handled"
+      automaticallyAdjustKeyboardInsets={true}
+      contentContainerStyle={styles.scrollContent}>
 
-      <Image
-      source={require('../../assets/images/suitcase.png')}
-      style={styles.image} 
-      resizeMode="contain"
-      />
+        <Image
+        source={require('../../assets/images/suitcase.png')}
+        style={styles.image} 
+        resizeMode="contain"
+        />
 
-      <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
-        <ThemedView style={styles.heroSection}>
+        <SafeAreaView style={styles.safeArea} edges={['top', 'left', 'right']}>
+          <ThemedView style={styles.heroSection}>
 
-          <TextInput 
-            value={tripName}
-            onChangeText={setTripName}
-            placeholder='Click to Enter Trip Name...'
-            style={styles.tripNameInput}
-            >
-          </TextInput>
+            <TextInput 
+              value={tripName}
+              onChangeText={setTripName}
+              placeholder='Click to Enter Trip Name...'
+              style={styles.tripNameInput}
+              >
+            </TextInput>
 
-          <TextInput
-            value={newItem}
-            onChangeText={setNewItem}
-            placeholder='Enter items...'
-            style={styles.input}
-            >
-          </TextInput>
+            <TextInput
+              value={newItem}
+              onChangeText={setNewItem}
+              placeholder='Enter items...'
+              style={styles.input}
+              >
+            </TextInput>
 
-          <Pressable onPress={addItem}>
-            <Text style={styles.buttonAdd}>Add</Text>
-          </Pressable>
+            <Pressable onPress={addItem}>
+              <Text style={styles.buttonAdd}>Add</Text>
+            </Pressable>
 
-          <ThemedView type="backgroundElement" style={styles.stepContainer}>
-            {items.map((inputNewItem) => {
-              return (
-                <View key={inputNewItem} style={styles.inputNewItem}>
-                  <ThemedText style={styles.items}>
-                    {inputNewItem}
-                  </ThemedText>
+            <ThemedView type="backgroundElement" style={styles.stepContainer}>
+              {items.map((inputNewItem) => {
+                return (
+                  <View key={inputNewItem} style={styles.inputNewItem}>
+                    <ThemedText style={styles.items}>
+                      {inputNewItem}
+                    </ThemedText>
 
-                  <Pressable onPress={()=> deleteItem(inputNewItem)}>
-                    <Text style={styles.buttonDelete}> Delete</Text>
-                  </Pressable>
-                </View>
-              );
-            })} 
+                    <Pressable onPress={()=> deleteItem(inputNewItem)}>
+                      <Text style={styles.buttonDelete}> Delete</Text>
+                    </Pressable>
+                  </View>
+                );
+              })} 
+            </ThemedView>
           </ThemedView>
-        </ThemedView>
-      </SafeAreaView>
-        
+        </SafeAreaView>
+      </ScrollView>
       <Pressable onPress={screenCheckList} style={styles.buttonCheckList}>
         <Text style={styles.checkListText}>CHECK LIST</Text>
       </Pressable>
 
 
       {Platform.OS === 'web' && <WebBadge />}
-     
+    
     </ThemedView>
   );
 }
@@ -157,6 +163,11 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+  },
+
+  scrollContent: {
+    flexGrow: 1,
+    paddingBottom: 24,
   },
 
   image: {
@@ -207,7 +218,7 @@ const styles = StyleSheet.create({
   },
 
   tripNameInput: {
-    fontSize: 26,
+    fontSize: 18,
     fontWeight: '600',
   },
 
